@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notices</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #ffffff; font-family: 'Segoe UI', sans-serif; padding: 12px 16px; }
+
+  .notices-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #323130;
+    margin-bottom: 10px;
+  }
+
+  .notices-title svg { flex-shrink: 0; }
+
+  .notice-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #f3f2f1;
+    border-left: 3px solid #cccccc;
+    border-radius: 3px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+  }
+
+  .notice-card svg { flex-shrink: 0; margin-top: 2px; }
+
+  .notice-content { flex: 1; }
+
+  .notice-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #323130;
+    margin-bottom: 3px;
+  }
+
+  .notice-body {
+    font-size: 14px;
+    color: #484644;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+
+  .notice-date {
+    font-size: 12px;
+    color: #797775;
+  }
+</style>
+</head>
+<body>
+
+<script>
+
+  // CAN EDIT: Notices/Alerts To Be Shown, true = visible, false = hidden
+
+
+  const notices = [
+
+    {
+      show: true,                          
+      title: "Scheduled System Maintenance",
+      body: "Epicor production environment will be updated on Thursday April 24, 2026 from 8:00 AM - 10:00 AM EST.",
+      date: "Scheduled: April 24, 2026"
+    },
+
+  // Adding in hidden lines for reference that there can be more then 1 notice/alert
+    { 
+      show: false,                         
+      title: "",
+      body: "",
+      date: ""
+    },
+
+    {
+      show: false,                         
+      title: "",
+      body: "",
+      date: ""
+    }
+
+  ];
+
+
+  // DO NOT EDIT
+
+  const gearIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 5a3 3 0 1 0 0 6A3 3 0 0 0 8 5zm0 1a2 2 0 1 1 0 4A2 2 0 0 1 8 6z" fill="#E91F26"/>
+    <path d="M7.35 1a.65.65 0 0 0-.644.56l-.111.793a5.03 5.03 0 0 0-.952.393l-.648-.467a.65.65 0 0 0-.848.084L3.363 3.147a.65.65 0 0 0-.083.848l.467.648a5.03 5.03 0 0 0-.393.952l-.793.111A.65.65 0 0 0 2 6.35v1.3c0 .327.243.6.56.644l.794.111c.1.334.233.654.392.952l-.467.648a.65.65 0 0 0 .084.848l.919.919a.65.65 0 0 0 .848.083l.648-.467c.298.16.618.293.952.393l.111.793c.044.317.317.56.644.56h1.3a.65.65 0 0 0 .644-.56l.111-.793a5.03 5.03 0 0 0 .952-.393l.648.467a.65.65 0 0 0 .848-.083l.919-.919a.65.65 0 0 0 .083-.848l-.467-.648c.16-.298.293-.618.393-.952l.793-.111A.65.65 0 0 0 14 7.65v-1.3a.65.65 0 0 0-.56-.644l-.793-.111a5.03 5.03 0 0 0-.393-.952l.467-.648a.65.65 0 0 0-.083-.848l-.919-.919a.65.65 0 0 0-.848-.084l-.648.467a5.03 5.03 0 0 0-.952-.393l-.111-.793A.65.65 0 0 0 8.65 1h-1.3zm.65 1h0l.097.692a.5.5 0 0 0 .378.41c.42.105.814.277 1.168.505a.5.5 0 0 0 .556-.014l.565-.407.354.354-.407.565a.5.5 0 0 0-.014.556c.228.354.4.748.505 1.168a.5.5 0 0 0 .41.378L12 6v.5h0l-.692.097a.5.5 0 0 0-.41.378 4.03 4.03 0 0 1-.505 1.168.5.5 0 0 0 .014.556l.407.565-.354.354-.565-.407a.5.5 0 0 0-.556-.014 4.03 4.03 0 0 1-1.168.505.5.5 0 0 0-.378.41L8 10.5v.5h-.5l-.097-.692a.5.5 0 0 0-.378-.41 4.03 4.03 0 0 1-1.168-.505.5.5 0 0 0-.556.014l-.565.407-.354-.354.407-.565a.5.5 0 0 0 .014-.556 4.03 4.03 0 0 1-.505-1.168.5.5 0 0 0-.41-.378L3.5 7v-.5h0l.692-.097a.5.5 0 0 0 .41-.378c.105-.42.277-.814.505-1.168a.5.5 0 0 0-.014-.556l-.407-.565.354-.354.565.407a.5.5 0 0 0 .556.014c.354-.228.748-.4 1.168-.505a.5.5 0 0 0 .378-.41L7.5 2H8z" fill="#E91F26"/>
+  </svg>`;
+
+  const warningIcon = `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8.003 1a.75.75 0 0 1 .65.376l6.997 12a.75.75 0 0 1-.65 1.124H1a.75.75 0 0 1-.65-1.124l7-12A.75.75 0 0 1 8.003 1zM8 5.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 1 0V6a.5.5 0 0 0-.5-.5zm0 6.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5z" fill="#E91F26"/>
+  </svg>`;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const visible = notices.filter(n => n.show);
+    if (visible.length === 0) {
+      document.body.style.display = 'none';
+      return;
+    }
+
+    const titleEl = document.createElement('div');
+    titleEl.className = 'notices-title';
+    titleEl.innerHTML = `${warningIcon} System Notices &amp; Alerts`;
+    document.body.appendChild(titleEl);
+
+    visible.forEach(n => {
+      const card = document.createElement('div');
+      card.className = 'notice-card';
+      card.innerHTML = `
+        ${gearIcon}
+        <div class="notice-content">
+          <div class="notice-title">${n.title}</div>
+          <div class="notice-body">${n.body}</div>
+          <div class="notice-date">${n.date}</div>
+        </div>
+      `;
+      document.body.appendChild(card);
+    });
+  });
+</script>
+
+</body>
+</html>
